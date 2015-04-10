@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<title>HTML,CSS,JavaScript ИНТЕРПРЕТЕР</title>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="style.css" />
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+
+
+
+
+</head>
+
+<body>
+	
+	
+<div id="wrapper">
+	
+	
+	<div id="meniLenta">
+		
+		<div id="logo">
+			ИНТЕРПРЕТЕР
+		</div>
+		<div id="kopceDiv">
+			
+			<button id="procesiraj">
+				СТАРТ
+			</button>
+			
+		</div>
+		
+		
+		
+		<ul id="izbor">
+			<li class="izberi selektirano">HTML</li>
+			<li class="izberi">CSS</li>
+			<li class="izberi">JS</li>
+			<li class="izberi selektirano" style="border: none">РЕЗУЛТАТ</li>
+			
+			
+		</ul>
+		
+	</div>
+	<div class="clear"></div>
+	
+	<div class="kodContainer" id="HTMLContainer">
+		
+		<div class="kodIme">HTML</div>
+		
+		<textarea id="htmlKod"><div id="test"></div></textarea>
+		
+		
+	</div>
+	
+	<div class="kodContainer" id="CSSContainer">
+		
+		<div class="kodIme">CSS</div>
+		
+		<textarea id="cssKod">
+			
+			html{
+				background-color:#c0392b;
+			}
+			
+		</textarea>
+		
+		
+	</div>
+	
+	<div class="kodContainer" id="JSContainer">
+		
+		<div class="kodIme">JS</div>
+		
+		<textarea id="jsKod">
+			
+			document.getElementById("test").innerHTML="ИНТЕРПРЕТЕР"
+			
+		</textarea>
+		
+		
+	</div>
+	
+	<div class="kodContainer" id="РЕЗУЛТАТContainer">
+		
+		<div class="kodIme">РЕЗУЛТАТ</div>
+		
+		<iframe id="rezultatRamka"></iframe>
+		
+		
+	</div>
+	
+</div>
+	
+<script>
+	
+	var windowHeight=$(window).height();
+	var meniLentaHeight=$("#meniLenta").height();
+	var kodContainerHeight=windowHeight-meniLentaHeight;
+	
+	$(".kodContainer").height(kodContainerHeight+"px");
+	$(".izberi").click(function(){
+		
+		$(this).toggleClass("selektirano");
+		
+		var activenDiv=$(this).html();
+	
+		
+		 $("#"+activenDiv+"Container").toggle();
+		 
+		 var aktivniDiv=$(".kodContainer").filter(function(){
+		 	
+		 	return($(this).css("display")!="none");
+		 	
+		 }).length;
+		 
+		 var width=100/aktivniDiv;
+		 $(".kodContainer").css("width",width+"%");
+		
+	});
+	
+	$("#procesiraj").click(function(){
+		
+		$("iframe").contents().find("html").html('<style>'+$("#cssKod").val()+'</style>'+$("#htmlKod").val());
+		
+		
+		document.getElementById("rezultatRamka").contentWindow.eval($("#jsKod").val());
+		
+		
+	});
+	
+	
+</script>
+	
+</body>
+
+</html>
